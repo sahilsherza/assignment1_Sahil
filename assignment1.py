@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 '''
-OPS435 Assignment 1 - Summer 2023
+OPS435 Assignment 1 - Fall 2024
 Program: assignment1.py 
-Author: "Student Name"
+Author: "Sahil sherzai"
 The python code in this file (a1_[Student_id].py) is original work written by
 "Student Name". No code in this file is copied from any other source
 except those provided by the course instructor, including any person,
@@ -24,41 +24,51 @@ def day_of_week(year: int, month: int, date: int) -> str:
     num = (year + year//4 - year//100 + year//400 + offset[month] + date) % 7
     return days[num]
 
+# Leap year check
+
+def leap_year(year):
+
+    if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+
+        return True
+
+    return False
+
+
 
 def mon_max(month:int, year:int) -> int:
     "returns the maximum day for a given month. Includes leap year check"
     ...
 
-def after(date: str) -> str:
-    '''
-    after() -> date for next day in YYYY-MM-DD string format
+def after(date_str):
 
-    Return the date for the next day of the given date in YYYY-MM-DD format.
-    This function takes care of the number of days in February for leap year.
-    This fucntion has been tested to work for year after 1582
-    '''
-    str_year, str_month, str_day = date.split('-')
-    year = int(str_year)
-    month = int(str_month)
-    day = int(str_day)
-    tmp_day = day + 1  # next day
+    # Parse the date
 
-    if tmp_day > mon_max(month, year):
-        to_day = tmp_day % mon_max(month, year)  # if tmp_day > this month's max, reset to 1 
-        tmp_month = month + 1
-    else:
-        to_day = tmp_day
-        tmp_month = month + 0
+    year, month, day = map(int, date_str.split('-'))
 
-    if tmp_month > 12:
-        to_month = 1
-        year = year + 1
-    else:
-        to_month = tmp_month + 0
+    
 
-    next_date = f"{year}-{to_month:02}-{to_day:02}"
+    # Calculate the next day's date
 
-    return next_date
+    day += 1
+
+    if day > mon_max(month, year):  # Adjust for the end of the month
+
+        day = 1
+
+        month += 1
+
+        if month > 12:  # Adjust for the end of the year
+
+            month = 1
+
+            year += 1
+
+    
+
+    return f"{year:04d}-{month:02d}-{day:02d}"
+
+
 
 
 def usage():
